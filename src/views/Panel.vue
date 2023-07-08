@@ -1,22 +1,16 @@
 <template>
   <div class="wrapper">
-    <el-row class="h-full">
+    <el-row>
       <el-col :span="12">
         <div class="px-10 py-8">
-          <el-form :model="serverState" label-width="140">
-            <p class="text-lg">Server Side</p>
-            <el-form-item label="IP">
-              <el-input v-model="serverState.IP" />
-            </el-form-item>
-            <el-form-item label="port">
-              <el-input v-model="serverState.port" />
-            </el-form-item>
-
-            <p class="text-lg">Client Side</p>
-            <div>
-              <ClientConfig />
-            </div>
-          </el-form>
+          <p class="text-lg">Server Side</p>
+          <div>
+            <ServerConfig />
+          </div>
+          <p class="text-lg">Client Side</p>
+          <div>
+            <ClientConfig />
+          </div>
         </div>
       </el-col>
       <el-col :span="12">
@@ -36,27 +30,32 @@
         </div>
       </el-col>
     </el-row>
+    <div class="text-center">
+      <el-button @click="download">Download Config File</el-button>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { computed, reactive } from "vue";
+import { computed } from "vue";
 import ClientConfig from "../components/ClientConfig.vue";
+import ServerConfig from "../components/ServerConfig.vue";
 import { useClient } from "../store/client";
-const clientState = useClient();
+import { useServer } from "../store/server";
+import { saveAs } from "file-saver";
 
-interface ServerProps {
-  IP: string;
-  port: string;
-}
-const serverState = reactive<ServerProps>({
-  IP: "",
-  port: "",
-});
+const clientState = useClient();
+const serverState = useServer();
 
 const serverConf = computed(() => {
   let str = "#frps.ini\n";
   if (serverState.port) {
     str += `\n[common]\nbind_port = ${serverState.port}`;
+  }
+
+  if (serverState.dashboard) {
+    str += `\n\ndashboard_port = ${serverState.dashboard_port}`;
+    str += `\ndashboard_user = ${serverState.dashboard_user}`;
+    str += `\ndashboard_pwd = ${serverState.dashboard_pwd}`;
   }
   return str;
 });
@@ -66,6 +65,11 @@ const clientConf = computed(() => {
   if (serverState.IP || serverState.port) {
     str += `\n[common]\nserver_addr = ${serverState.IP}\nserver_port = ${serverState.port}`;
   }
+
+  if (clientState.type === "https") {
+    str += `\nvhost_https_port = 443`;
+  }
+
   if (clientState.type === "http") {
     str += `\n\n[web]\ntype = http`;
     if (clientState.local_port) {
@@ -88,6 +92,33 @@ const clientConf = computed(() => {
       str += `\nremote_port = ${clientState.remote_port}`;
     }
   }
+
+  if (clientState.type === "https") {
+    str += `\n\n[https]\ntype = ${clientState.type}`;
+
+    str += `\ncustom_domains = ${clientState.custom_domains}`;
+
+    str += `\n\n`;
+
+    str += `\nplugin = https2http`;
+    str += `\nplugin_local_addr = ${clientState.local_addr}`;
+    str += `\nplugin_crt_path = ${clientState.crt_path}`;
+    str += `\nplugin_key_path = ${clientState.key_path}`;
+    str += `\nplugin_host_header_rewrite = ${clientState.header_rewrite}`;
+    str += `\nplugin_header_X-From-Where = ${clientState.header_from}`;
+  }
   return str;
 });
+
+const download = () => {
+  downloadFile(serverConf.value, "frps.ini");
+  downloadFile(clientConf.value, "frpc.ini");
+};
+
+const downloadFile = async (content: string, fileName: string) => {
+  await saveAs(
+    new Blob([content], { type: "text/plain;charset=utf-8" }),
+    fileName
+  );
+};
 </script>

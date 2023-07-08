@@ -30,6 +30,27 @@
         ></el-input>
       </el-form-item>
     </template>
+
+    <template v-if="state.type === 'https'">
+      <el-form-item label="绑定域名" prop="custom_domains">
+        <el-input v-model="state.custom_domains" placeholder="8080"></el-input>
+      </el-form-item>
+      <el-form-item label="本地地址" prop="local_addr">
+        <el-input v-model="state.local_addr" placeholder="8080"></el-input>
+      </el-form-item>
+      <el-form-item label="crt路径" prop="crt_path">
+        <el-input v-model="state.crt_path" placeholder="/"></el-input>
+      </el-form-item>
+      <el-form-item label="key路径" prop="key_path">
+        <el-input v-model="state.key_path" placeholder="/"></el-input>
+      </el-form-item>
+      <el-form-item label="请求头重写" prop="header_rewrite">
+        <el-input v-model="state.header_rewrite" placeholder="/"></el-input>
+      </el-form-item>
+      <el-form-item label="请求头来源标识" prop="header_from">
+        <el-input v-model="state.header_from"></el-input>
+      </el-form-item>
+    </template>
   </el-form>
 </template>
 <script lang="ts" setup>
@@ -45,6 +66,9 @@ const types = [
   },
   {
     label: "http",
+  },
+  {
+    label: "https",
   },
 ];
 </script>
