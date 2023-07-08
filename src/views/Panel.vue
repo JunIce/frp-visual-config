@@ -63,17 +63,29 @@ const serverConf = computed(() => {
 
 const clientConf = computed(() => {
   let str = "#frpc.ini\n";
+  if (serverState.IP || serverState.port) {
+    str += `\n[common]\nserver_addr = ${serverState.IP}\nserver_port = ${serverState.port}`;
+  }
   if (clientState.type === "http") {
-    if (serverState.IP || serverState.port) {
-      str += `\n[common]\nserver_addr = ${serverState.IP}\nserver_port = ${serverState.port}`;
-    }
-
-    str += `\n\n[web]\ntype = http`
+    str += `\n\n[web]\ntype = http`;
     if (clientState.local_port) {
       str += `\nlocal_port = ${clientState.local_port}`;
     }
     if (clientState.custom_domains) {
       str += `\ncustom_domains = ${clientState.custom_domains}`;
+    }
+  }
+
+  if (clientState.type === "tcp" || clientState.type === "udp") {
+    str += `\n\n[ssh]\ntype = ${clientState.type}`;
+    if (clientState.local_ip) {
+      str += `\nlocal_ip = ${clientState.local_ip}`;
+    }
+    if (clientState.local_port) {
+      str += `\nlocal_port = ${clientState.local_port}`;
+    }
+    if (clientState.remote_port) {
+      str += `\nremote_port = ${clientState.remote_port}`;
     }
   }
   return str;
