@@ -56,6 +56,10 @@ const serverConf = computed(() => {
     str += `\nvhost_http_port = ${clientState.vhost_http_port}`;
   }
 
+  if (clientState.type === "https") {
+    str += `\nvhost_https_port = 443`;
+  }
+
   if (serverState.dashboard) {
     str += `\n\ndashboard_port = ${serverState.dashboard_port}`;
     str += `\ndashboard_user = ${serverState.dashboard_user}`;
@@ -68,10 +72,6 @@ const clientConf = computed(() => {
   let str = "#frpc.ini\n";
   if (serverState.IP || serverState.port) {
     str += `\n[common]\nserver_addr = ${serverState.IP}\nserver_port = ${serverState.port}`;
-  }
-
-  if (clientState.type === "https") {
-    str += `\nvhost_https_port = 443`;
   }
 
   if (clientState.type === "http") {

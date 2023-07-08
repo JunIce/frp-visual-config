@@ -42,9 +42,6 @@
           placeholder="www.example.com"
         ></el-input>
       </el-form-item>
-      <el-form-item label="虚拟主机端口" prop="vhost_http_port">
-        <el-input v-model="state.vhost_http_port" placeholder="80"></el-input>
-      </el-form-item>
     </template>
 
     <template v-if="state.type === 'https'">

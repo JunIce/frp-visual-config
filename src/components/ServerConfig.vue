@@ -7,6 +7,9 @@
       <el-form-item label="port">
         <el-input v-model="state.port" />
       </el-form-item>
+      <el-form-item v-if="client.type === 'http'" label="虚拟主机端口" prop="vhost_http_port">
+        <el-input v-model="client.vhost_http_port" placeholder="80"></el-input>
+      </el-form-item>
       <el-form-item label="dashboard">
         <el-checkbox v-model="state.dashboard" />
       </el-form-item>
@@ -26,6 +29,8 @@
 </template>
 <script lang="ts" setup>
 import { useServer } from "../store/server";
+import { useClient } from "../store/client";
 const state = useServer();
+const client = useClient();
 </script>
 <style></style>
