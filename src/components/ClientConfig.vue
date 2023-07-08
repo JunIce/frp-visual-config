@@ -8,14 +8,27 @@
       </el-radio-group>
     </el-form-item>
     <template v-if="state.type === 'tcp' || state.type === 'udp'">
+      <el-form-item
+        v-if="state.type === 'tcp'"
+        label="多TCP服务"
+        prop="tcp_multi"
+      >
+        <el-checkbox v-model="state.tcp_multi" />
+      </el-form-item>
       <el-form-item label="本地ip" prop="local_ip">
         <el-input v-model="state.local_ip" placeholder="192.168.1.1"></el-input>
       </el-form-item>
       <el-form-item label="本地端口" prop="local_port">
         <el-input v-model="state.local_port" placeholder="8080"></el-input>
       </el-form-item>
-      <el-form-item label="远程端口" prop="remote_port">
+      <el-form-item v-if="!state.tcp_multi" label="远程端口" prop="remote_port">
         <el-input v-model="state.remote_port" placeholder="6666"></el-input>
+      </el-form-item>
+      <el-form-item v-else label="绑定域名" prop="custom_domains">
+        <el-input
+          v-model="state.custom_domains"
+          placeholder="machine-a.example.com"
+        ></el-input>
       </el-form-item>
     </template>
 
@@ -26,14 +39,20 @@
       <el-form-item label="绑定域名" prop="custom_domains">
         <el-input
           v-model="state.custom_domains"
-          placeholder="http://example.com"
+          placeholder="www.example.com"
         ></el-input>
+      </el-form-item>
+      <el-form-item label="虚拟主机端口" prop="vhost_http_port">
+        <el-input v-model="state.vhost_http_port" placeholder="80"></el-input>
       </el-form-item>
     </template>
 
     <template v-if="state.type === 'https'">
       <el-form-item label="绑定域名" prop="custom_domains">
-        <el-input v-model="state.custom_domains" placeholder="8080"></el-input>
+        <el-input
+          v-model="state.custom_domains"
+          placeholder="machine-a.example.com"
+        ></el-input>
       </el-form-item>
       <el-form-item label="本地地址" prop="local_addr">
         <el-input v-model="state.local_addr" placeholder="8080"></el-input>

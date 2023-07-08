@@ -8,7 +8,11 @@ export const useClient = defineStore("client", {
     custom_domains: "",
     remote_port: "",
 
+    // tcp
+    tcp_multi: false,
+
     // https
+    vhost_http_port: "80",
     local_addr: "",
     crt_path: "",
     key_path: "",

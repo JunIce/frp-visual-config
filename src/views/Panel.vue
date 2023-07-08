@@ -52,6 +52,10 @@ const serverConf = computed(() => {
     str += `\n[common]\nbind_port = ${serverState.port}`;
   }
 
+  if (clientState.type === "http") {
+    str += `\nvhost_http_port = ${clientState.vhost_http_port}`;
+  }
+
   if (serverState.dashboard) {
     str += `\n\ndashboard_port = ${serverState.dashboard_port}`;
     str += `\ndashboard_user = ${serverState.dashboard_user}`;
@@ -81,14 +85,24 @@ const clientConf = computed(() => {
   }
 
   if (clientState.type === "tcp" || clientState.type === "udp") {
-    str += `\n\n[ssh]\ntype = ${clientState.type}`;
+    str += `\n\n[ssh]\ntype = ${
+      clientState.tcp_multi ? "tcpmux" : clientState.type
+    }`;
+
+    if (clientState.tcp_multi) {
+      str += `\nmultiplexer = httpconnect`;
+    }
+
     if (clientState.local_ip) {
       str += `\nlocal_ip = ${clientState.local_ip}`;
     }
     if (clientState.local_port) {
       str += `\nlocal_port = ${clientState.local_port}`;
     }
-    if (clientState.remote_port) {
+    if (clientState.tcp_multi) {
+      str += `\ncustom_domains = ${clientState.custom_domains}`;
+    }
+    if (!clientState.tcp_multi && clientState.remote_port) {
       str += `\nremote_port = ${clientState.remote_port}`;
     }
   }
