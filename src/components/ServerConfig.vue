@@ -1,13 +1,21 @@
 <template>
   <div>
-    <el-form :model="state" label-width="140">
+    <el-form
+      :model="state"
+      :label-width="app.isMobile ? 'auto' : 140"
+      :label-position="app.isMobile ? 'left' : 'right'"
+    >
       <el-form-item label="IP">
         <el-input v-model="state.IP" />
       </el-form-item>
       <el-form-item label="port">
         <el-input v-model="state.port" />
       </el-form-item>
-      <el-form-item v-if="client.type === 'http'" label="虚拟主机端口" prop="vhost_http_port">
+      <el-form-item
+        v-if="client.type === 'http'"
+        label="虚拟主机端口"
+        prop="vhost_http_port"
+      >
         <el-input v-model="client.vhost_http_port" placeholder="80"></el-input>
       </el-form-item>
       <el-form-item label="dashboard">
@@ -30,7 +38,9 @@
 <script lang="ts" setup>
 import { useServer } from "../store/server";
 import { useClient } from "../store/client";
+import { useApp } from "../store/app";
 const state = useServer();
 const client = useClient();
+const app = useApp();
 </script>
 <style></style>

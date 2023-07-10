@@ -1,5 +1,8 @@
 <template>
-  <el-form :model="state" label-width="140">
+  <el-form :model="state"
+  
+  :label-width="app.isMobile ? 'auto' : 140"
+      :label-position="app.isMobile ? 'left' : 'right'">
     <el-form-item label="类型" prop="type">
       <el-radio-group v-model="state.type">
         <el-radio v-for="item in types" :label="item.label">{{
@@ -71,7 +74,9 @@
 </template>
 <script lang="ts" setup>
 import { useClient } from "../store/client";
+import { useApp } from "../store/app";
 const state = useClient();
+const app = useApp();
 
 const types = [
   {

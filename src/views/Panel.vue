@@ -1,8 +1,8 @@
 <template>
   <div class="wrapper">
     <el-row>
-      <el-col :span="12">
-        <div class="px-10 py-8">
+      <el-col :lg="12" :sm="24">
+        <div class="p-2 md:px-10 md:py-8">
           <p class="text-lg">Server Side</p>
           <div>
             <ServerConfig />
@@ -13,8 +13,8 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="12">
-        <div class="px-20 py-10">
+      <el-col :lg="12" :sm="24">
+        <div class="p-2 md:px-20 md:py-10">
           <p class="mb-2 text-md text-gray-900">frps.ini</p>
           <div>
             <pre class="bg-slate-400 rounded-md p-4 text-current">{{
