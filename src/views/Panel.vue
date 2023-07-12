@@ -9,7 +9,7 @@
           </div>
           <p class="text-lg">Client Side</p>
           <div>
-            <ClientConfig />
+            <ClientConfig ref="clientConfRef" />
           </div>
         </div>
       </el-col>
@@ -47,6 +47,7 @@ const clientState = useClient();
 const serverState = useServer();
 
 const serverConfRef = ref();
+const clientConfRef = ref();
 
 const serverConf = computed(() => {
   let str = "#frps.ini\n";
@@ -127,7 +128,10 @@ const clientConf = computed(() => {
 });
 
 const download = () => {
-  serverConfRef.value.validate().then(() => {
+  Promise.all([
+    serverConfRef.value.validate(),
+    clientConfRef.value.validate(),
+  ]).then(() => {
     downloadFile(serverConf.value, "frps.ini");
     downloadFile(clientConf.value, "frpc.ini");
   });

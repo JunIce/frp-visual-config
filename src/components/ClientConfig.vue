@@ -1,6 +1,8 @@
 <template>
   <el-form
+    ref="clientConfRef"
     :model="state"
+    :rules="rules"
     :label-width="app.isMobile ? 'auto' : 140"
     :label-position="app.isMobile ? 'left' : 'right'"
   >
@@ -74,10 +76,15 @@
   </el-form>
 </template>
 <script lang="ts" setup>
+import { computed, ref } from "vue";
 import { useClient } from "../store/client";
 import { useApp } from "../store/app";
+import { FormInstance } from "element-plus";
+import validator from "validator";
+
 const state = useClient();
 const app = useApp();
+const clientConfRef = ref<FormInstance>();
 
 const types = [
   {
@@ -93,4 +100,79 @@ const types = [
     label: "https",
   },
 ];
+
+const rules = computed(() => {
+  return {
+    local_ip: [
+      {
+        required: true,
+      },
+      {
+        validator: (rule: any, value: string, cb: Function) => {
+          if (validator.isIP(value)) {
+            cb();
+          } else {
+            cb(new Error("请输入正确的IP"));
+          }
+        },
+      },
+    ],
+    local_port: [
+      {
+        required: true,
+      },
+      {
+        validator: (rule: any, value: string, cb: Function) => {
+          if (validator.isPort(value)) {
+            cb();
+          } else {
+            cb(new Error("请输入正确的port"));
+          }
+        },
+      },
+    ],
+    remote_port: [
+      {
+        required: true,
+      },
+      {
+        validator: (rule: any, value: string, cb: Function) => {
+          if (validator.isPort(value)) {
+            cb();
+          } else {
+            cb(new Error("请输入正确的port"));
+          }
+        },
+      },
+    ],
+    custom_domains: [
+      {
+        required: true,
+      },
+      {
+        validator: (rule: any, value: string, cb: Function) => {
+          if (validator.isFQDN(value)) {
+            cb();
+          } else {
+            cb(new Error("请输入正确的domain"));
+          }
+        },
+      },
+    ],
+  };
+});
+
+const validate = () => {
+  return new Promise((resolve, reject) => {
+    clientConfRef.value!.validate((valid, fields) => {
+      if (valid) {
+        resolve(state);
+      }
+    });
+  });
+};
+
+defineExpose({
+  validate,
+});
 </script>

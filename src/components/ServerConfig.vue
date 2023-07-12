@@ -38,7 +38,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 import { useServer } from "../store/server";
 import { useClient } from "../store/client";
 import { useApp } from "../store/app";
@@ -115,12 +115,6 @@ const validate = () => {
     });
   });
 };
-
-onMounted(() => {
-  setTimeout(() => {
-    validate();
-  }, 3000);
-});
 
 defineExpose({
   validate,
