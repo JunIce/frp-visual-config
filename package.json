@@ -12,10 +12,12 @@
 		"element-plus": "^2.3.7",
 		"file-saver": "^2.0.5",
 		"pinia": "^2.1.4",
+		"validator": "^13.9.0",
 		"vue": "^3.3.4"
 	},
 	"devDependencies": {
 		"@types/file-saver": "^2.0.5",
+		"@types/validator": "^13.7.17",
 		"@vitejs/plugin-vue": "^3.0.0",
 		"@vue/compiler-sfc": "^3.1.2",
 		"autoprefixer": "^10.4.14",

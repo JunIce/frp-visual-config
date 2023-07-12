@@ -1,8 +1,9 @@
 <template>
-  <el-form :model="state"
-  
-  :label-width="app.isMobile ? 'auto' : 140"
-      :label-position="app.isMobile ? 'left' : 'right'">
+  <el-form
+    :model="state"
+    :label-width="app.isMobile ? 'auto' : 140"
+    :label-position="app.isMobile ? 'left' : 'right'"
+  >
     <el-form-item label="类型" prop="type">
       <el-radio-group v-model="state.type">
         <el-radio v-for="item in types" :label="item.label">{{

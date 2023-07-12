@@ -5,7 +5,7 @@
         <div class="p-2 md:px-10 md:py-8">
           <p class="text-lg">Server Side</p>
           <div>
-            <ServerConfig />
+            <ServerConfig ref="serverConfRef" />
           </div>
           <p class="text-lg">Client Side</p>
           <div>
@@ -36,7 +36,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import ClientConfig from "../components/ClientConfig.vue";
 import ServerConfig from "../components/ServerConfig.vue";
 import { useClient } from "../store/client";
@@ -45,6 +45,8 @@ import { saveAs } from "file-saver";
 
 const clientState = useClient();
 const serverState = useServer();
+
+const serverConfRef = ref();
 
 const serverConf = computed(() => {
   let str = "#frps.ini\n";
@@ -125,8 +127,10 @@ const clientConf = computed(() => {
 });
 
 const download = () => {
-  downloadFile(serverConf.value, "frps.ini");
-  downloadFile(clientConf.value, "frpc.ini");
+  serverConfRef.value.validate().then(() => {
+    downloadFile(serverConf.value, "frps.ini");
+    downloadFile(clientConf.value, "frpc.ini");
+  });
 };
 
 const downloadFile = async (content: string, fileName: string) => {
