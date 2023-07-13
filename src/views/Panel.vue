@@ -38,7 +38,7 @@
       </el-col>
     </el-row>
     <div class="text-center">
-      <el-button @click="download">Download Config File</el-button>
+      <el-button @click="download" type="primary">Download Config File</el-button>
     </div>
   </div>
 </template>
