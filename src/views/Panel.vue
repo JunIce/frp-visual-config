@@ -1,5 +1,12 @@
 <template>
-  <div class="wrapper">
+  <a href="https://github.com/JunIce/frp-visual-config" target="_blank">
+    <img
+      class="fixed w-6 z-10 right-4 top-4"
+      src="../assets/images/github.svg"
+      alt="github"
+    />
+  </a>
+  <div class="wrapper pt-4">
     <el-row>
       <el-col :lg="12" :sm="24">
         <div class="p-2 md:px-10 md:py-8">
