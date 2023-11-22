@@ -1,9 +1,16 @@
 import { defineStore } from "pinia";
+import i18n from "../lang"
 
 export const useApp = defineStore("app", {
   state: () => ({
     isMobile: isMobile(),
+    locale: 'en'
   }),
+  actions: {
+    changeLocale(locale: 'zh' | 'en') {
+      i18n.global.locale = locale
+    }
+  }
 });
 
 const isMobile = (

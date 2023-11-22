@@ -15,7 +15,7 @@
       </el-form-item>
       <el-form-item
         v-if="client.type === 'http'"
-        label="虚拟主机端口"
+        :label="$t('vhost_http_port')"
         prop="vhost_http_port"
       >
         <el-input v-model="client.vhost_http_port" placeholder="80"></el-input>
