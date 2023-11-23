@@ -1,0 +1,17 @@
+{
+  "server_side": "Server Side",
+  "client_side": "Client Side",
+  "download_file": "Download Config File",
+  "type": "Type",
+  "multi_tcp": "Multi TCP Service",
+  "local_ip": "Local IP",
+  "local_port": "Local Port",
+  "remote_port": "Remote Port",
+  "bind_domain": "Bind Domain",
+  "local_addr": "Local Addr",
+  "crt_path": "CRT Path",
+  "key_path": "Key Path",
+  "header_rewrite": "Header Rewrite",
+  "header_from": "Header From",
+  "vhost_http_port": "vhost Http Port"
+}

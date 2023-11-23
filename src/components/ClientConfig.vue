@@ -6,7 +6,7 @@
     :label-width="app.isMobile ? 'auto' : 140"
     :label-position="app.isMobile ? 'left' : 'right'"
   >
-    <el-form-item label="类型" prop="type">
+    <el-form-item :label="$t('type')" prop="type">
       <el-radio-group v-model="state.type">
         <el-radio v-for="item in types" :label="item.label">{{
           item.label
@@ -16,21 +16,21 @@
     <template v-if="state.type === 'tcp' || state.type === 'udp'">
       <el-form-item
         v-if="state.type === 'tcp'"
-        label="多TCP服务"
+        :label="$t('multi_tcp')"
         prop="tcp_multi"
       >
         <el-checkbox v-model="state.tcp_multi" />
       </el-form-item>
-      <el-form-item label="本地ip" prop="local_ip">
+      <el-form-item :label="$t('local_ip')" prop="local_ip">
         <el-input v-model="state.local_ip" placeholder="192.168.1.1"></el-input>
       </el-form-item>
-      <el-form-item label="本地端口" prop="local_port">
+      <el-form-item :label="$t('local_port')" prop="local_port">
         <el-input v-model="state.local_port" placeholder="8080"></el-input>
       </el-form-item>
-      <el-form-item v-if="!state.tcp_multi" label="远程端口" prop="remote_port">
+      <el-form-item v-if="!state.tcp_multi" :label="$t('remote_port')" prop="remote_port">
         <el-input v-model="state.remote_port" placeholder="6666"></el-input>
       </el-form-item>
-      <el-form-item v-else label="绑定域名" prop="custom_domains">
+      <el-form-item v-else :label="$t('bind_domain')" prop="custom_domains">
         <el-input
           v-model="state.custom_domains"
           placeholder="machine-a.example.com"
@@ -39,10 +39,10 @@
     </template>
 
     <template v-if="state.type === 'http'">
-      <el-form-item label="本地端口" prop="local_port">
+      <el-form-item :label="$t('local_port')" prop="local_port">
         <el-input v-model="state.local_port" placeholder="8080"></el-input>
       </el-form-item>
-      <el-form-item label="绑定域名" prop="custom_domains">
+      <el-form-item :label="$t('bind_domain')" prop="custom_domains">
         <el-input
           v-model="state.custom_domains"
           placeholder="www.example.com"
@@ -51,25 +51,25 @@
     </template>
 
     <template v-if="state.type === 'https'">
-      <el-form-item label="绑定域名" prop="custom_domains">
+      <el-form-item :label="$t('bind_domain')" prop="custom_domains">
         <el-input
           v-model="state.custom_domains"
           placeholder="machine-a.example.com"
         ></el-input>
       </el-form-item>
-      <el-form-item label="本地地址" prop="local_addr">
+      <el-form-item :label="$t('local_addr')" prop="local_addr">
         <el-input v-model="state.local_addr" placeholder="8080"></el-input>
       </el-form-item>
-      <el-form-item label="crt路径" prop="crt_path">
+      <el-form-item :label="$t('crt_path')" prop="crt_path">
         <el-input v-model="state.crt_path" placeholder="/"></el-input>
       </el-form-item>
-      <el-form-item label="key路径" prop="key_path">
+      <el-form-item :label="$t('key_path')" prop="key_path">
         <el-input v-model="state.key_path" placeholder="/"></el-input>
       </el-form-item>
-      <el-form-item label="请求头重写" prop="header_rewrite">
+      <el-form-item :label="$t('header_rewrite')" prop="header_rewrite">
         <el-input v-model="state.header_rewrite" placeholder="/"></el-input>
       </el-form-item>
-      <el-form-item label="请求头来源标识" prop="header_from">
+      <el-form-item :label="$t('header_from')" prop="header_from">
         <el-input v-model="state.header_from"></el-input>
       </el-form-item>
     </template>

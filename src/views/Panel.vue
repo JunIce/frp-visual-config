@@ -1,20 +1,31 @@
 <template>
-  <a href="https://github.com/JunIce/frp-visual-config" target="_blank">
-    <img
-      class="fixed w-6 z-10 right-4 top-4"
-      src="../assets/images/github.svg"
-      alt="github"
-    />
-  </a>
   <div class="wrapper pt-4">
+    <div class="fixed z-10 right-4 top-4 flex items-center">
+      <el-dropdown @command="handleChangeLocale">
+        <el-button link>
+          {{ appStore.locale
+          }}<el-icon class="el-icon--right"><arrow-down /></el-icon>
+        </el-button>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item command="zh">中文</el-dropdown-item>
+            <el-dropdown-item command="en">En</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+
+      <a href="https://github.com/JunIce/frp-visual-config" target="_blank">
+        <img class="w-6 ml-2" src="../assets/images/github.svg" alt="github" />
+      </a>
+    </div>
     <el-row>
       <el-col :lg="12" :sm="24">
         <div class="p-2 md:px-10 md:py-8">
-          <p class="text-lg">Server Side</p>
+          <p class="text-lg">{{ $t("server_side") }}</p>
           <div>
             <ServerConfig ref="serverConfRef" />
           </div>
-          <p class="text-lg">Client Side</p>
+          <p class="text-lg">{{ $t("client_side") }}</p>
           <div>
             <ClientConfig ref="clientConfRef" />
           </div>
@@ -38,7 +49,9 @@
       </el-col>
     </el-row>
     <div class="text-center">
-      <el-button @click="download" type="primary">Download Config File</el-button>
+      <el-button @click="download" type="primary">{{
+        $t("download_file")
+      }}</el-button>
     </div>
   </div>
 </template>
@@ -48,8 +61,11 @@ import ClientConfig from "../components/ClientConfig.vue";
 import ServerConfig from "../components/ServerConfig.vue";
 import { useClient } from "../store/client";
 import { useServer } from "../store/server";
+import { useApp } from "../store/app";
+
 import { saveAs } from "file-saver";
 
+const appStore = useApp();
 const clientState = useClient();
 const serverState = useServer();
 
@@ -149,5 +165,10 @@ const downloadFile = async (content: string, fileName: string) => {
     new Blob([content], { type: "text/plain;charset=utf-8" }),
     fileName
   );
+};
+
+const handleChangeLocale = (command: string) => {
+  appStore.locale = command;
+  appStore.changeLocale(command as any);
 };
 </script>

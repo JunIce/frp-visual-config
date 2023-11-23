@@ -1,0 +1,17 @@
+{
+  "server_side": "服务端",
+  "client_side": "客户端",
+  "download_file": "下载配置文件",
+  "type": "类型",
+  "multi_tcp": "多TCP服务",
+  "local_ip": "本地ip",
+  "local_port": "本地端口",
+  "remote_port": "远程端口",
+  "bind_domain": "绑定域名",
+  "local_addr": "本地地址",
+  "crt_path": "crt路径",
+  "key_path": "key路径",
+  "header_rewrite": "请求头重写",
+  "header_from": "请求头来源标识",
+  "vhost_http_port": "虚拟主机端口"
+}
